@@ -37,46 +37,9 @@ import datetime
 class SqliteControl:
 
     def __init__(self):
-        # Session = sessionmaker()
-        # engine = create_engine('sqlite:///db.sqlite3')
-        # Session.configure(bind=engine)
-        # self.session = Session()
-        # self.News = AntenaApp_news()
-
         pass
 
     def insert(self,dict):
-
-        # print dict
-
-        # data = self.session.query(self.News).filter(id=1)
-
-
-        # query = 'INSERT INTO AntenaApp_news VALUES(%(news_code)s,%(title)s,' \
-        #         '%(sub_title)s,%(content)s,%(sub_content)s,%(thumb_url)s,' \
-        #         '%(category)s,%(pub_date)s,%(tag)s,%(big_image_url)s,' \
-        #         '%(pc_url)s,%(mobile)s,%(count)s,%(day_count)s)' % \
-        #         {"news_code":dict['news_code'],"title":dict['title'],
-        #         "sub_title":dict['sub_title'],"content":dict['content'],
-        #         "sub_content":dict['sub_content'],"thumb_url":dict['thumb_url'],
-        #         "category":dict['category'],"pub_date":dict['pub_date'],
-        #         "tag":dict['tag'],"big_image_url":dict['big_image_url'],
-        #         "pc_url":dict['pc_url'],"mobile":dict['mobile'],
-        #         "count":0,"day_count":0
-        #         }
-
-        # query = 'INSERT INTO AntenaApp_news VALUES(%(news_code)s,"%(title)s",' \
-        #         '"%(sub_title)s","%(content)s","%(sub_content)s","%(thumb_url)s",' \
-        #         '"%(category)s","%(pub_date)s","%(tag)s,%(big_image_url)s",' \
-        #         '"%(pc_url)s",%(mobile)s,%(count)s,%(day_count)s)' % \
-        #         {"news_code":dict['news_code'],"title":dict['title'],
-        #         "sub_title":dict['sub_title'],"content":" ",
-        #         "sub_content":" ","thumb_url":dict['thumb_url'],
-        #         "category":dict['category'],"pub_date":dict['pub_date'],
-        #         "tag":dict['tag'],"big_image_url":dict['big_image_url'],
-        #         "pc_url":dict['pc_url'],"mobile":dict['mobile'],
-        #         "count":0,"day_count":0
-        #         }
 
         query = 'INSERT INTO AntenaApp_news(news_code,' \
                                             'title,' \

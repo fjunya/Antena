@@ -14,8 +14,52 @@ Category
 
 import requests
 from xml.etree import ElementTree
+import sqlite3
 import re
-from DBControl import SqliteControl
+# from DBControl import SqliteControl
+
+class SqliteControl:
+
+    def __init__(self):
+        pass
+
+    def insert(self,dict):
+
+        query = 'INSERT INTO AntenaApp_news(news_code,' \
+                                            'title,' \
+                                            'sub_title,' \
+                                            'content,' \
+                                            'sub_content,' \
+                                            'thumb_url,' \
+                                            'category,' \
+                                            'tag,' \
+                                            'big_image_url,' \
+                                            'pc_url,' \
+                                            'mobile,' \
+                                            'count,' \
+                                            'day_count) VALUES (%s,"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",%d,%d)' % \
+                                            (dict['news_code'],
+                                             dict['title'],
+                                             dict['sub_title'],
+                                             dict['content'],
+                                             dict['sub_content'],
+                                             dict['thumb_url'],
+                                             dict['category'],
+                                             dict['tag'],
+                                             dict['big_image_url'],
+                                             dict['pc_url'],
+                                             dict['mobile'],
+                                             0,
+                                             0)
+
+
+        print(query)
+        #
+        con = sqlite3.connect("db.sqlite3")
+        con.execute(query)
+        con.commit()
+        con.close()
+
 
 class R25:
 
