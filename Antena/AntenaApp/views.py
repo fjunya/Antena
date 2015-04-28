@@ -33,7 +33,8 @@ def putNews(request,start=1,limit=30,search=None):
     for news in news_list:
         news_dict = OrderedDict([
             ("title", news.title),
-            ("thumb_url", news.thumb_url)
+            ("thumb_url", news.thumb_url),
+            ("url", news.pc_url),
         ])
         news_dict_list.append(news_dict)
         # json_dict.update({"title":news.title,"thumb_url":news.thumb_url})
