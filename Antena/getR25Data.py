@@ -113,7 +113,7 @@ class R25:
 
                     if xml_child2.tag.find("urls") != -1:
                         for xml_child3 in xml_child2.getchildren():
-                            if xml_child3.tag.find("pc"):
+                            if xml_child3.tag.find("pc") != -1:
                                 dict.update({"pc_url" : xml_child3.text})
                                 dict.update({"mobile" : xml_child3.text})
                     elif xml_child2.tag.find("category") != -1:
@@ -133,7 +133,7 @@ class R25:
 
 if __name__  == '__main__':
     r25 = R25()
-    res = r25.getNews(category="07",count="100")
+    res = r25.getNews(category="01",count="100")
     sql = SqliteControl()
     for dict in res:
         sql.insert(dict)
