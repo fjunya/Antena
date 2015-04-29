@@ -8,23 +8,39 @@ from models import News
 import json
 from django.http import HttpResponse
 from collections import OrderedDict
+from django.db.models import Q
 
 def top(request):
     form = NewsForm()
     return JsonResponse({'result': 'ok'})
 
-def putNews(request,start=1,limit=30,search=None):
+def putNews(request):
     try:
-        start = request.GET['start']
-        limit = request.GET['limit']
+        start = int(request.GET['start'])
+    except:
+        start = 0
+    try:
+        limit = int(request.GET['limit'])
+        limit += start
+    except:
+        limit = 30 + start
+    try:
         search = request.GET['search']
     except:
-        pass
+        search = None
+
     if search:
-        news_list = News.objects.filter(title=search).filter(
-                                        content=search)[start:start+limit]
+        # search_news_list = News.objects.filter(title__icontains=search).filter(
+        #                                 content__icontains=search)
+        search_news_list = News.objects.filter(Q(title__icontains=search) |
+                                               Q(content__icontains=search) |
+                                               Q(sub_content__icontains=search))
+        if search_news_list.count() > limit - start:
+            news_list = search_news_list[start:limit]
+        else:
+            news_list = search_news_list
     else:
-        news_list = News.objects.all()[start:start+limit]
+        news_list = News.objects.all()[start:limit]
 
     # json_list = []
     # json_dict = {}
