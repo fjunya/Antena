@@ -3,6 +3,15 @@
 from django.db import models
 from django.contrib import admin
 
+"""
+CATEGORY
+1:エンタメ
+2:スポーツ
+3:アダルト
+4:美女
+5:お金・ギャンブル
+"""
+
 class News(models.Model):
     news_code = models.CharField("識別ID",max_length=200,blank=True,null=True)
     title = models.CharField("タイトル",max_length=200,blank=True,null=True)
@@ -18,6 +27,7 @@ class News(models.Model):
     mobile = models.CharField("Mobile URL",max_length=200,blank=True,null=True)
     count = models.IntegerField("閲覧数",max_length=10,blank=True,null=True)
     day_count = models.IntegerField("1日の閲覧数",max_length=10,blank=True,null=True)
+    site = models.CharField("雑誌名", max_length=100,blank=True,null=True)
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('pk','news_code','title')

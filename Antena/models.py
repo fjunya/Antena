@@ -28,6 +28,7 @@ class News_Connection(Base):
     mobile = Column('mobile',VARCHAR)
     count = Column('count',INTEGER)
     day_count = Column('day_count',INTEGER)
+    site = Column('site',VARCHAR)
 
 
 if __name__  == '__main__':

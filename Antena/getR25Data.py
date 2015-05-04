@@ -14,52 +14,7 @@ Category
 
 import requests
 from xml.etree import ElementTree
-import sqlite3
-import re
-# from DBControl import SqliteControl
-
-class SqliteControl:
-
-    def __init__(self):
-        pass
-
-    def insert(self,dict):
-
-        query = 'INSERT INTO AntenaApp_news(news_code,' \
-                                            'title,' \
-                                            'sub_title,' \
-                                            'content,' \
-                                            'sub_content,' \
-                                            'thumb_url,' \
-                                            'category,' \
-                                            'tag,' \
-                                            'big_image_url,' \
-                                            'pc_url,' \
-                                            'mobile,' \
-                                            'count,' \
-                                            'day_count) VALUES (%s,"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s",%d,%d)' % \
-                                            (dict['news_code'],
-                                             dict['title'],
-                                             dict['sub_title'],
-                                             dict['content'],
-                                             dict['sub_content'],
-                                             dict['thumb_url'],
-                                             dict['category'],
-                                             dict['tag'],
-                                             dict['big_image_url'],
-                                             dict['pc_url'],
-                                             dict['mobile'],
-                                             0,
-                                             0)
-
-
-        print(query)
-        #
-        con = sqlite3.connect("db.sqlite3")
-        con.execute(query)
-        con.commit()
-        con.close()
-
+from datetime import datetime
 
 class R25:
 
@@ -108,18 +63,29 @@ class R25:
                             if tag[0] == "thumb_url":
                                 dict.update({"content":""})
                                 dict.update({"big_image_url":""})
+                                #雑誌名の追加
+                                dict.update({'site':u'R25'})
                                 return_list.append(dict)
                                 break
+                            elif tag[0] == 'pub_date':
+                                pub_date = datetime.strptime(xml_child2.text, '%Y%m%d')
+                                dict.update({tag[0] : pub_date})
+                            elif tag[0] == 'tag':
+                                if xml_child2.text in [u'今日の彼女',u'美女']:
+                                    dict.update({'tag' : u'美女'})
+                                else:
+                                    dict.update({'tag' : u'エンタメ'})
+
 
                     if xml_child2.tag.find("urls") != -1:
                         for xml_child3 in xml_child2.getchildren():
                             if xml_child3.tag.find("pc") != -1:
                                 dict.update({"pc_url" : xml_child3.text})
                                 dict.update({"mobile" : xml_child3.text})
-                    elif xml_child2.tag.find("category") != -1:
-                        for xml_child4 in xml_child2.getchildren():
-                            if xml_child4.tag.find("name"):
-                                dict.update({"category" : xml_child4.text})
+                    # elif xml_child2.tag.find("category") != -1:
+                    #     for xml_child4 in xml_child2.getchildren():
+                    #         if xml_child4.tag.find("name"):
+                    #             dict.update({"category" : xml_child4.text})
         return return_list
 
     def getCategory(self):
@@ -129,14 +95,6 @@ class R25:
         """
         request_url = self.url + "category/v1?key=" + self.auth_key
         return requests.get(request_url)
-
-
-if __name__  == '__main__':
-    r25 = R25()
-    res = r25.getNews(category="01",count="100")
-    sql = SqliteControl()
-    for dict in res:
-        sql.insert(dict)
 
 
 

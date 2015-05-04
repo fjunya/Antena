@@ -28,6 +28,7 @@ class Migration(migrations.Migration):
                 ('mobile', models.CharField(max_length=200, null=True, verbose_name=b'Mobile URL', blank=True)),
                 ('count', models.IntegerField(max_length=10, null=True, verbose_name=b'\xe9\x96\xb2\xe8\xa6\xa7\xe6\x95\xb0', blank=True)),
                 ('day_count', models.IntegerField(max_length=10, null=True, verbose_name=b'1\xe6\x97\xa5\xe3\x81\xae\xe9\x96\xb2\xe8\xa6\xa7\xe6\x95\xb0', blank=True)),
+                ('site', models.CharField(max_length=100, null=True, verbose_name=b'\xe9\x9b\x91\xe8\xaa\x8c\xe5\x90\x8d', blank=True)),
             ],
             options={
             },
