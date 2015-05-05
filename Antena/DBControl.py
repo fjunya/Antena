@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from getSPAData import SPA
 from getR25Data import R25
+from getBunsyunData import Bunsyun
 from models import News_Connection
 
 def insertDb(news_list,session):
@@ -94,6 +95,12 @@ if __name__  == '__main__':
     r25 = R25()
     news_list = r25.getNews(category="06",count="100")
     insertDb(news_list,session)
+
+    #週間文春からデータの取得
+    bunsyun = Bunsyun()
+    news_list = bunsyun.getNews()
+    insertDb(news_list,session)
+
 
 
 

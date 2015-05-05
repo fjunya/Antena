@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.shortcuts import render
+# from django.shortcuts import render
 
 from form import NewsForm
 from django.http import JsonResponse
@@ -29,33 +29,31 @@ def putNews(request):
     except:
         search = None
 
+    #DBからニュースデータの取得
     if search:
-        # search_news_list = News.objects.filter(title__icontains=search).filter(
-        #                                 content__icontains=search)
         search_news_list = News.objects.filter(Q(title__icontains=search) |
                                                Q(content__icontains=search) |
-                                               Q(sub_content__icontains=search))
+                                               Q(sub_content__icontains=search)).order_by('-pub_date')
         if search_news_list.count() > limit - start:
             news_list = search_news_list[start:limit]
         else:
             news_list = search_news_list
     else:
-        news_list = News.objects.all()[start:limit]
+        news_list = News.objects.all().order_by('-pub_date')[start:limit]
 
-    # json_list = []
-    # json_dict = {}
+    #ニュース辞書データ格納用リスト
     news_dict_list = []
 
     for news in news_list:
+        # print news.pub_date
         news_dict = OrderedDict([
             ("title", news.title),
             ("thumb_url", news.thumb_url),
             ("url", news.pc_url),
         ])
         news_dict_list.append(news_dict)
-        # json_dict.update({"title":news.title,"thumb_url":news.thumb_url})
-        # json_list.append(json_dict)
 
+    #news_dict_listをjson型の文字列に変換
     json_str = json.dumps(news_dict_list,ensure_ascii=False,indent=2)
     response = HttpResponse(json_str, content_type='application/json; charset=UTF-8',status=200)
 

@@ -30,6 +30,6 @@ class News(models.Model):
     site = models.CharField("雑誌名", max_length=100,blank=True,null=True)
 
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('pk','news_code','title')
+    list_display = ('pk','news_code','title','site')
 
 admin.site.register(News,NewsAdmin)
