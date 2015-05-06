@@ -50,6 +50,7 @@ def putNews(request):
             ("title", news.title),
             ("thumb_url", news.thumb_url),
             ("url", news.pc_url),
+            ("site", news.site),
         ])
         news_dict_list.append(news_dict)
 
